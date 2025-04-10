@@ -1,0 +1,75 @@
+#include <stdio.h>
+
+// Estrutura para armazenar os dados de uma carta
+typedef struct {
+    char estado[50];
+    char codigo[10];
+    char nome_cidade[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontos_turisticos;
+    float densidade_populacional;
+    float pib_per_capita;
+} Carta;
+
+// Função para calcular atributos derivados (densidade populacional e PIB per capita)
+void calcular_atributos(Carta *carta) {
+    carta->densidade_populacional = carta->populacao / carta->area;
+    carta->pib_per_capita = carta->pib / carta->populacao;
+}
+
+// Função para exibir os dados de uma carta
+void exibir_carta(Carta carta) {
+    printf("\nEstado: %s\n", carta.estado);
+    printf("Código: %s\n", carta.codigo);
+    printf("Cidade: %s\n", carta.nome_cidade);
+    printf("População: %d\n", carta.populacao);
+    printf("Área: %.2f km²\n", carta.area);
+    printf("PIB: %.2f\n", carta.pib);
+    printf("Pontos turísticos: %d\n", carta.pontos_turisticos);
+    printf("Densidade Populacional: %.2f habitantes/km²\n", carta.densidade_populacional);
+    printf("PIB per capita: %.2f\n", carta.pib_per_capita);
+}
+
+// Função para comparar duas cartas com base em um atributo
+void comparar_cartas(Carta carta1, Carta carta2) {
+    // Escolher o atributo a ser comparado diretamente no código
+    // Exemplo: Comparação por "população"
+    char atributo[] = "população";
+
+    printf("\nComparação de cartas (Atributo: %s):\n", atributo);
+    printf("Carta 1 - %s (%s): %d\n", carta1.nome_cidade, carta1.estado, carta1.populacao);
+    printf("Carta 2 - %s (%s): %d\n", carta2.nome_cidade, carta2.estado, carta2.populacao);
+
+    // Regra: Maior valor vence, exceto Densidade Populacional (menor valor vence)
+    if (carta1.populacao > carta2.populacao) {
+        printf("Resultado: Carta 1 (%s) venceu!\n", carta1.nome_cidade);
+    } else if (carta1.populacao < carta2.populacao) {
+        printf("Resultado: Carta 2 (%s) venceu!\n", carta2.nome_cidade);
+    } else {
+        printf("Resultado: Empate!\n");
+    }
+}
+
+int main() {
+    // Cadastro de duas cartas
+    Carta carta1 = {"São Paulo", "C1", "São Paulo", 12300000, 1521.11, 750000000, 20};
+    Carta carta2 = {"Rio de Janeiro", "C2", "Rio de Janeiro", 6000000, 1200.28, 300000000, 15};
+
+    // Calcular atributos derivados
+    calcular_atributos(&carta1);
+    calcular_atributos(&carta2);
+
+    // Exibir os dados das cartas
+    printf("Carta 1:");
+    exibir_carta(carta1);
+
+    printf("\nCarta 2:");
+    exibir_carta(carta2);
+
+    // Comparar as cartas
+    comparar_cartas(carta1, carta2);
+
+    return 0;
+}
